@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestProperty AI - Smart Real Estate Investment Analysis</title>
+    <title>InvestProperty AI - Análisis Inteligente de Inversiones Inmobiliarias</title>
     <style>
         * {
             margin: 0;
@@ -155,10 +155,8 @@
         }
 
         .analyzer-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .form-section {
@@ -366,16 +364,6 @@
             font-size: 0.95rem;
         }
 
-        /* Hidden Results */
-        .results-wrapper {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .results-wrapper.show {
-            display: block;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -387,11 +375,7 @@
             }
 
             .analyzer-container {
-                grid-template-columns: 1fr;
-            }
-
-            .results-container {
-                grid-template-columns: 1fr;
+                max-width: 100%;
             }
 
             .input-group {
@@ -411,26 +395,6 @@
             }
         }
 
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .spinner {
-            border: 3px solid var(--neutral-light);
-            border-top: 3px solid var(--secondary-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 1rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -439,10 +403,10 @@
         <div class="header-container">
             <div class="logo">📊 InvestProperty AI</div>
             <nav>
-                <a href="#analyzer">Try It</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <button class="btn-primary">Get Started</button>
+                <a href="#analyzer">Pruébalo</a>
+                <a href="#features">Características</a>
+                <a href="about.html">Acerca de</a>
+                <button class="btn-primary">Comenzar</button>
             </nav>
         </div>
     </header>
@@ -450,130 +414,75 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Smart Real Estate Investment Analysis Powered by AI</h1>
-            <p>Analyze property investments with AI-powered Monte Carlo simulations. Get instant insights on ROI, NPV, and investment viability.</p>
+            <h1>Inversiones en propiedades con el poder de la AI</h1>
+            <p>Analiza inversiones inmobiliarias con simulaciones Monte Carlo impulsadas por IA. Obtén información instantánea sobre ROI, VPN y viabilidad de inversión.</p>
             <div class="hero-buttons">
-                <button class="btn-primary" onclick="document.getElementById('analyzer').scrollIntoView({ behavior: 'smooth' })">Start Analysis</button>
-                <button class="btn-secondary">Watch Demo</button>
+                <button class="btn-primary" onclick="document.getElementById('analyzer').scrollIntoView({ behavior: 'smooth' })">Iniciar Análisis</button>
+                <button class="btn-secondary">Ver Demo</button>
             </div>
         </div>
     </section>
 
     <!-- Analyzer Section -->
     <section id="analyzer" class="analyzer">
-        <h2>Analyze Your Investment</h2>
+        <h2>Analiza Tu Inversión</h2>
         
         <div class="analyzer-container">
             <!-- Form -->
             <div class="form-section">
-                <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Property Details</h3>
-                
-                <div class="form-group">
-                    <label for="propertyPrice">Property Price ($)</label>
-                    <input type="number" id="propertyPrice" placeholder="500000" min="0">
-                </div>
-
-                <div class="input-group">
-                    <div class="form-group">
-                        <label for="downPayment">Down Payment (%)</label>
-                        <input type="number" id="downPayment" placeholder="20" min="0" max="100" value="20">
-                    </div>
-                    <div class="form-group">
-                        <label for="interestRate">Interest Rate (%)</label>
-                        <input type="number" id="interestRate" placeholder="6.5" min="0" step="0.1" value="6.5">
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <div class="form-group">
-                        <label for="mortgageTerm">Mortgage Term (years)</label>
-                        <input type="number" id="mortgageTerm" placeholder="30" min="1" value="30">
-                    </div>
-                    <div class="form-group">
-                        <label for="monthlyRent">Monthly Rent ($)</label>
-                        <input type="number" id="monthlyRent" placeholder="3000" min="0" value="3000">
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <div class="form-group">
-                        <label for="annualAppreciation">Annual Appreciation (%)</label>
-                        <input type="number" id="annualAppreciation" placeholder="3.5" min="0" step="0.1" value="3.5">
-                    </div>
-                    <div class="form-group">
-                        <label for="yearlyExpenses">Annual Expenses (%)</label>
-                        <input type="number" id="yearlyExpenses" placeholder="25" min="0" max="100" value="25">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="investmentPeriod">Investment Period (years)</label>
-                    <input type="number" id="investmentPeriod" placeholder="10" min="1" value="10">
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Property Location</label>
-                    <input type="text" id="location" placeholder="e.g., New York, NY">
-                </div>
-
-                <button class="analyze-btn" onclick="analyzeInvestment()">🔍 Analyze Investment</button>
-            </div>
-
-            <!-- Results -->
-            <div class="results-section">
-                <div class="results-wrapper" id="resultsWrapper">
-                    <div class="loading" id="loadingSpinner" style="display: none;">
-                        <div class="spinner"></div>
-                        <p>Running 10,000 Monte Carlo simulations...</p>
-                    </div>
+                <form action="results.html" method="GET">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Detalles de la Propiedad</h3>
                     
-                    <div id="resultsContent" style="display: none;">
-                        <div class="results-container">
-                            <div class="result-card">
-                                <div class="result-label">Net Present Value</div>
-                                <div class="result-value" id="npvValue">$0</div>
-                                <small style="color: var(--text-secondary);">Expected NPV (10th percentile)</small>
-                            </div>
+                    <div class="form-group">
+                        <label for="propertyPrice">Precio de la Propiedad ($)</label>
+                        <input type="number" id="propertyPrice" name="propertyPrice" placeholder="500000" min="0" required>
+                    </div>
 
-                            <div class="result-card">
-                                <div class="result-label">Return on Investment</div>
-                                <div class="result-value" id="roiValue">0%</div>
-                                <small style="color: var(--text-secondary);">Average annual return</small>
-                            </div>
-
-                            <div class="result-card">
-                                <div class="result-label">Property Value (Projected)</div>
-                                <div class="result-value" id="projectedValue">$0</div>
-                                <small style="color: var(--text-secondary);">At end of investment period</small>
-                            </div>
-
-                            <div class="result-card">
-                                <div class="result-label">Total Profit</div>
-                                <div class="result-value" id="totalProfit">$0</div>
-                                <small style="color: var(--text-secondary);">Net gain including rental income</small>
-                            </div>
-
-                            <div class="result-card">
-                                <div class="result-label">Best Case Scenario</div>
-                                <div class="result-value" id="bestCase">$0</div>
-                                <small style="color: var(--text-secondary);">90th percentile outcome</small>
-                            </div>
-
-                            <div class="result-card">
-                                <div class="result-label">Worst Case Scenario</div>
-                                <div class="result-value" id="worstCase">$0</div>
-                                <small style="color: var(--text-secondary);">10th percentile outcome</small>
-                            </div>
-
-                            <div class="investment-recommendation">
-                                <div class="recommendation-badge" id="recommendationBadge">STRONG BUY</div>
-                                <div class="recommendation-text" id="recommendationText">
-                                    This property shows strong investment potential based on Monte Carlo analysis.
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label for="downPayment">Enganche (%)</label>
+                            <input type="number" id="downPayment" name="downPayment" placeholder="20" min="0" max="100" value="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="interestRate">Tasa de Interés (%)</label>
+                            <input type="number" id="interestRate" name="interestRate" placeholder="6.5" min="0" step="0.1" value="6.5" required>
                         </div>
                     </div>
-                </div>
+
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label for="mortgageTerm">Plazo de Hipoteca (años)</label>
+                            <input type="number" id="mortgageTerm" name="mortgageTerm" placeholder="30" min="1" value="30" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthlyRent">Renta Mensual ($)</label>
+                            <input type="number" id="monthlyRent" name="monthlyRent" placeholder="3000" min="0" value="3000" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label for="annualAppreciation">Apreciación Anual (%)</label>
+                            <input type="number" id="annualAppreciation" name="annualAppreciation" placeholder="3.5" min="0" step="0.1" value="3.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="yearlyExpenses">Gastos Anuales (%)</label>
+                            <input type="number" id="yearlyExpenses" name="yearlyExpenses" placeholder="25" min="0" max="100" value="25" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="investmentPeriod">Período de Inversión (años)</label>
+                        <input type="number" id="investmentPeriod" name="investmentPeriod" placeholder="10" min="1" value="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Ubicación de la Propiedad</label>
+                        <input type="text" id="location" name="location" placeholder="ej., Ciudad de México, CDMX" required>
+                    </div>
+
+                    <button type="submit" class="analyze-btn">🔍 Analizar Inversión</button>
+                </form>
             </div>
         </div>
     </section>
@@ -581,193 +490,47 @@
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="features-container">
-            <h2>Why Choose InvestProperty AI?</h2>
+            <h2>¿Por Qué Elegir InvestProperty AI?</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🤖</div>
-                    <h3>AI-Powered Analysis</h3>
-                    <p>Advanced algorithms analyze market trends, property appreciation, and rental income projections to give you accurate investment insights.</p>
+                    <h3>Análisis Impulsado por IA</h3>
+                    <p>Algoritmos avanzados analizan tendencias del mercado, apreciación de propiedades y proyecciones de ingresos por renta para darte información precisa de inversión.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3>Monte Carlo Simulations</h3>
-                    <p>10,000 probability scenarios run instantly to calculate best-case, worst-case, and realistic investment outcomes.</p>
+                    <h3>Simulaciones Monte Carlo</h3>
+                    <p>10,000 escenarios de probabilidad se ejecutan instantáneamente para calcular resultados de inversión en el mejor caso, peor caso y realistas.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">💰</div>
-                    <h3>ROI & NPV Calculations</h3>
-                    <p>Get precise return on investment and net present value metrics to compare properties and make data-driven decisions.</p>
+                    <h3>Cálculos de ROI y VPN</h3>
+                    <p>Obtén métricas precisas de retorno de inversión y valor presente neto para comparar propiedades y tomar decisiones basadas en datos.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">📍</div>
-                    <h3>Location Intelligence</h3>
-                    <p>Market-specific insights considering regional appreciation rates, rental demands, and economic indicators.</p>
+                    <h3>Inteligencia de Ubicación</h3>
+                    <p>Información específica del mercado considerando tasas de apreciación regional, demanda de renta e indicadores económicos.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Instant Results</h3>
-                    <p>Get comprehensive investment analysis in seconds, not hours. Make faster decisions with real-time data.</p>
+                    <h3>Resultados Instantáneos</h3>
+                    <p>Obtén un análisis completo de inversión en segundos, no en horas. Toma decisiones más rápidas con datos en tiempo real.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
-                    <h3>Secure & Private</h3>
-                    <p>Your property data and analysis are encrypted and never shared. Complete privacy for your investment analysis.</p>
+                    <h3>Seguro y Privado</h3>
+                    <p>Tus datos de propiedad y análisis están encriptados y nunca se comparten. Privacidad completa para tu análisis de inversión.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <script>
-        function analyzeInvestment() {
-            // Get input values
-            const propertyPrice = parseFloat(document.getElementById('propertyPrice').value);
-            const downPaymentPercent = parseFloat(document.getElementById('downPayment').value);
-            const interestRate = parseFloat(document.getElementById('interestRate').value);
-            const mortgageTerm = parseInt(document.getElementById('mortgageTerm').value);
-            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value);
-            const annualAppreciation = parseFloat(document.getElementById('annualAppreciation').value);
-            const yearlyExpensesPercent = parseFloat(document.getElementById('yearlyExpenses').value);
-            const investmentPeriod = parseInt(document.getElementById('investmentPeriod').value);
-            const location = document.getElementById('location').value;
-
-            // Validate inputs
-            if (!propertyPrice || propertyPrice <= 0) {
-                alert('Please enter a valid property price');
-                return;
-            }
-
-            // Show loading spinner
-            const resultsWrapper = document.getElementById('resultsWrapper');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const resultsContent = document.getElementById('resultsContent');
-            
-            resultsWrapper.classList.add('show');
-            loadingSpinner.style.display = 'block';
-            resultsContent.style.display = 'none';
-
-            // Simulate processing delay
-            setTimeout(() => {
-                // Calculate initial investment
-                const downPayment = propertyPrice * (downPaymentPercent / 100);
-                const loanAmount = propertyPrice - downPayment;
-
-                // Monte Carlo simulation
-                const simulations = 10000;
-                const results = [];
-
-                for (let i = 0; i < simulations; i++) {
-                    // Add randomness to variables (±10%)
-                    const appreciation = annualAppreciation + (Math.random() - 0.5) * 2;
-                    const expenses = yearlyExpensesPercent + (Math.random() - 0.5) * 5;
-                    const rent = monthlyRent * (0.95 + Math.random() * 0.1);
-
-                    // Calculate property value after investment period
-                    let propertyValue = propertyPrice;
-                    for (let year = 0; year < investmentPeriod; year++) {
-                        propertyValue = propertyValue * (1 + appreciation / 100);
-                    }
-
-                    // Calculate total rental income
-                    const annualExpenses = (propertyPrice * (expenses / 100));
-                    const annualRentalIncome = rent * 12;
-                    const netAnnualCashFlow = annualRentalIncome - annualExpenses;
-                    const totalRentalCashFlow = netAnnualCashFlow * investmentPeriod;
-
-                    // Calculate total profit
-                    const propertyAppreciation = propertyValue - propertyPrice;
-                    const totalProfit = propertyAppreciation + totalRentalCashFlow;
-
-                    // Calculate NPV (simplified, assuming 10% discount rate)
-                    const discountRate = 0.10;
-                    let npv = -downPayment;
-                    for (let year = 1; year <= investmentPeriod; year++) {
-                        const cashFlow = netAnnualCashFlow;
-                        npv += cashFlow / Math.pow(1 + discountRate, year);
-                    }
-                    npv += propertyAppreciation / Math.pow(1 + discountRate, investmentPeriod);
-
-                    // Calculate ROI
-                    const roi = (totalProfit / downPayment) * 100 / investmentPeriod;
-
-                    results.push({
-                        npv: npv,
-                        roi: roi,
-                        propertyValue: propertyValue,
-                        totalProfit: totalProfit,
-                        totalCashFlow: totalRentalCashFlow
-                    });
-                }
-
-                // Sort results for percentile calculations
-                results.sort((a, b) => a.npv - b.npv);
-
-                // Calculate statistics
-                const p10NPV = results[Math.floor(simulations * 0.1)].npv;
-                const p90NPV = results[Math.floor(simulations * 0.9)].npv;
-                const avgROI = results.reduce((sum, r) => sum + r.roi, 0) / simulations;
-                const avgPropertyValue = results.reduce((sum, r) => sum + r.propertyValue, 0) / simulations;
-                const avgProfit = results.reduce((sum, r) => sum + r.totalProfit, 0) / simulations;
-                const p90Profit = results[Math.floor(simulations * 0.9)].totalProfit;
-                const p10Profit = results[Math.floor(simulations * 0.1)].totalProfit;
-
-                // Update UI
-                document.getElementById('npvValue').textContent = '$' + formatNumber(p10NPV);
-                document.getElementById('roiValue').textContent = avgROI.toFixed(2) + '%';
-                document.getElementById('projectedValue').textContent = '$' + formatNumber(Math.round(avgPropertyValue));
-                document.getElementById('totalProfit').textContent = '$' + formatNumber(Math.round(avgProfit));
-                document.getElementById('bestCase').textContent = '$' + formatNumber(Math.round(p90Profit));
-                document.getElementById('worstCase').textContent = '$' + formatNumber(Math.round(p10Profit));
-
-                // Determine recommendation
-                const badge = document.getElementById('recommendationBadge');
-                const text = document.getElementById('recommendationText');
-                
-                let recommendation = '';
-                let badgeClass = '';
-
-                if (avgROI > 10 && p10NPV > 0) {
-                    recommendation = '🚀 STRONG BUY';
-                    badgeClass = 'positive';
-                    text.innerHTML = `<strong>${location || 'This property'}</strong> shows excellent investment potential! With an average ROI of ${avgROI.toFixed(1)}% annually and a positive NPV in conservative scenarios, this property is a solid investment opportunity. The Monte Carlo analysis suggests strong returns across multiple market conditions.`;
-                } else if (avgROI > 5 && p10NPV > -10000) {
-                    recommendation = '✅ BUY';
-                    badgeClass = 'positive';
-                    text.innerHTML = `<strong>${location || 'This property'}</strong> presents a good investment opportunity. With an expected ROI of ${avgROI.toFixed(1)}% annually, this property offers competitive returns. Consider this for a balanced real estate portfolio.`;
-                } else if (avgROI > 0) {
-                    recommendation = '⚠️ CAUTION';
-                    badgeClass = 'caution';
-                    text.innerHTML = `<strong>${location || 'This property'}</strong> shows modest returns of ${avgROI.toFixed(1)}% annually. While there's potential profit, carefully evaluate your investment criteria. Consider comparing with other opportunities in the market.`;
-                } else {
-                    recommendation = '❌ NOT RECOMMENDED';
-                    badgeClass = 'risky';
-                    text.innerHTML = `<strong>${location || 'This property'}</strong> may not be a suitable investment at the current parameters. The analysis shows negative or minimal returns. Consider negotiating a lower price or looking for alternative properties with better fundamentals.`;
-                }
-
-                badge.textContent = recommendation;
-                badge.className = 'recommendation-badge ' + badgeClass;
-
-                // Hide loading, show results
-                loadingSpinner.style.display = 'none';
-                resultsContent.style.display = 'block';
-            }, 1500);
-        }
-
-        function formatNumber(num) {
-            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Allow Enter key to submit
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
-                analyzeInvestment();
-            }
-        });
-    </script>
 </body>
 </html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Análisis - InvestProperty AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d3561;
+            --secondary-color: #6366f1;
+            --accent-color: #10b981;
+            --neutral-light: #f8f9fa;
+            --neutral-dark: #1f2937;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Results Section */
+        .results-page {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .results-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .results-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: var(--neutral-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .result-card.positive {
+            border-left-color: var(--accent-color);
+        }
+
+        .result-card.negative {
+            border-left-color: #ef4444;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .result-value.positive {
+            color: var(--accent-color);
+        }
+
+        .result-value.negative {
+            color: #ef4444;
+        }
+
+        .investment-recommendation {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--accent-color);
+        }
+
+        .recommendation-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-badge.caution {
+            background: #f59e0b;
+        }
+
+        .recommendation-badge.risky {
+            background: #ef4444;
+        }
+
+        .recommendation-text {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .results-header h1 {
+                font-size: 2rem;
+            }
+
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">📊 InvestProperty AI</a></div>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="index.html#analyzer">Pruébalo</a>
+                <a href="index.html#features">Características</a>
+                <a href="about.html">Acerca de</a>
+                <a href="index.html" class="btn-primary">Nuevo Análisis</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Results Section -->
+    <section class="results-page">
+        <div class="results-header">
+            <h1>Resultados del Análisis</h1>
+            <p>Análisis de inversión inmobiliaria basado en simulaciones Monte Carlo</p>
+        </div>
+
+        <div class="results-container">
+            <div class="result-card">
+                <div class="result-label">Valor Presente Neto</div>
+                <div class="result-value" id="npvValue">$0</div>
+                <small style="color: var(--text-secondary);">VPN esperado (percentil 10)</small>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Retorno de Inversión</div>
+                <div class="result-value" id="roiValue">0%</div>
+                <small style="color: var(--text-secondary);">Retorno anual promedio</small>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Valor de la Propiedad (Proyectado)</div>
+                <div class="result-value" id="projectedValue">$0</div>
+                <small style="color: var(--text-secondary);">Al final del período de inversión</small>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Ganancia Total</div>
+                <div class="result-value" id="totalProfit">$0</div>
+                <small style="color: var(--text-secondary);">Ganancia neta incluyendo ingresos por renta</small>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Mejor Escenario</div>
+                <div class="result-value" id="bestCase">$0</div>
+                <small style="color: var(--text-secondary);">Resultado del percentil 90</small>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Peor Escenario</div>
+                <div class="result-value" id="worstCase">$0</div>
+                <small style="color: var(--text-secondary);">Resultado del percentil 10</small>
+            </div>
+
+            <div class="investment-recommendation">
+                <div class="recommendation-badge" id="recommendationBadge">COMPRA FUERTE</div>
+                <div class="recommendation-text" id="recommendationText">
+                    Esta propiedad muestra un fuerte potencial de inversión basado en el análisis Monte Carlo.
+                </div>
+            </div>
+        </div>
+
+        <div class="back-button">
+            <a href="index.html" class="btn-secondary">Realizar Nuevo Análisis</a>
+        </div>
+    </section>
+</body>
+</html>
+

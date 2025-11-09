@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - InvestProperty AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d3561;
+            --secondary-color: #6366f1;
+            --accent-color: #10b981;
+            --neutral-light: #f8f9fa;
+            --neutral-dark: #1f2937;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .about-content {
+            background: var(--neutral-light);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 3rem;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content li {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .team-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .team-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .team-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--neutral-dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            .about-content h2 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">📊 InvestProperty AI</a></div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="index.html#analyzer">Try It</a>
+                <a href="index.html#features">Features</a>
+                <a href="about.html">About</a>
+                <a href="index.html" class="btn-primary">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About InvestProperty AI</h1>
+            <p>Empowering smart real estate investment decisions through AI-powered analysis</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="content-section">
+        <div class="about-content">
+            <h2>Our Mission</h2>
+            <p>
+                InvestProperty AI was created to democratize access to sophisticated real estate investment analysis. 
+                We believe that everyone, from first-time investors to seasoned professionals, should have access to 
+                powerful analytical tools that help make informed investment decisions.
+            </p>
+            <p>
+                Our platform combines advanced Monte Carlo simulation techniques with intuitive design, making complex 
+                financial modeling accessible to all. We're committed to providing accurate, reliable, and actionable 
+                insights that help you navigate the real estate market with confidence.
+            </p>
+
+            <h2>How It Works</h2>
+            <p>
+                InvestProperty AI uses Monte Carlo simulation, a powerful statistical method that runs thousands of 
+                scenarios to predict investment outcomes. Here's what makes our analysis unique:
+            </p>
+            <ul>
+                <li><strong>10,000+ Simulations:</strong> Each analysis runs thousands of probability scenarios to account for market variability</li>
+                <li><strong>Comprehensive Metrics:</strong> We calculate NPV, ROI, projected property values, and risk scenarios</li>
+                <li><strong>Market-Aware Modeling:</strong> Our algorithms consider appreciation rates, rental income, expenses, and market volatility</li>
+                <li><strong>Risk Assessment:</strong> We provide best-case, worst-case, and realistic scenarios to help you understand potential outcomes</li>
+                <li><strong>Instant Results:</strong> Get comprehensive analysis in seconds, not hours</li>
+            </ul>
+
+            <h2>Why Monte Carlo?</h2>
+            <p>
+                Traditional investment calculators provide single-point estimates that don't account for market uncertainty. 
+                Monte Carlo simulation addresses this by:
+            </p>
+            <ul>
+                <li>Modeling multiple variables simultaneously (appreciation, expenses, rental income)</li>
+                <li>Accounting for market volatility and uncertainty</li>
+                <li>Providing probability distributions rather than fixed numbers</li>
+                <li>Helping investors understand both upside potential and downside risk</li>
+            </ul>
+            <p>
+                This approach gives you a more realistic view of your investment's potential, helping you make decisions 
+                with a better understanding of the risks and rewards involved.
+            </p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">10K+</div>
+                <div class="stat-label">Simulations Per Analysis</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Privacy Protected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">&lt;2s</div>
+                <div class="stat-label">Analysis Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Free to Use</div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <h2 class="section-title">Built for Investors, By Investors</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-icon">🎯</div>
+                <h3>Data-Driven</h3>
+                <p>Every calculation is based on proven financial models and statistical methods</p>
+            </div>
+            <div class="team-card">
+                <div class="team-icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>Your data stays on your device. We never store or share your property information</p>
+            </div>
+            <div class="team-card">
+                <div class="team-icon">⚡</div>
+                <h3>Fast & Accurate</h3>
+                <p>Get comprehensive analysis instantly with results you can trust</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#analyzer">Analyzer</a>
+                <a href="index.html#features">Features</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 InvestProperty AI. All rights reserved.</p>
+                <p style="margin-top: 0.5rem;">Empowering smart real estate investment decisions.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
