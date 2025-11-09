@@ -77,6 +77,92 @@
             opacity: 0.8;
         }
 
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-item {
+            padding: 0.75rem 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            text-align: left;
+            background: none;
+            font-family: inherit;
+        }
+
+        .user-dropdown-item:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: default;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item:first-child:hover {
+            background-color: transparent;
+        }
+
+        .user-dropdown-item:hover {
+            background-color: var(--neutral-light);
+        }
+
+        .user-dropdown-item.logout {
+            color: #ef4444;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item.logout:hover {
+            background-color: #fef2f2;
+        }
+
         .btn-primary {
             background-color: var(--accent-color);
             color: white;
@@ -318,7 +404,14 @@
                 <a href="index.html#analyzer">Try It</a>
                 <a href="index.html#features">Features</a>
                 <a href="about.html">About</a>
-                <a href="index.html" class="btn-primary">Get Started</a>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div id="userAvatar" class="user-avatar"></div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-item" id="usernameDisplay"></div>
+                        <button class="user-dropdown-item logout" id="logoutButton">Cerrar Sesión</button>
+                    </div>
+                </div>
+                <a href="index.html" class="btn-primary" id="loginButton" style="display: none;">Get Started</a>
             </nav>
         </div>
     </header>
@@ -432,6 +525,66 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Verificar estado de login al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const username = localStorage.getItem('username');
+            
+            // Si está logeado, mostrar avatar con iniciales
+            const userMenu = document.getElementById('userMenu');
+            const userAvatar = document.getElementById('userAvatar');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const loginButton = document.getElementById('loginButton');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (isLoggedIn === 'true' && username && userMenu && userAvatar) {
+                // Obtener iniciales del usuario
+                const initials = username.substring(0, 2).toUpperCase();
+                userAvatar.textContent = initials;
+                userMenu.style.display = 'block';
+                
+                // Mostrar nombre de usuario en el dropdown
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = username;
+                }
+                
+                // Ocultar botón de comenzar si existe
+                if (loginButton) {
+                    loginButton.style.display = 'none';
+                }
+                
+                // Toggle del menú desplegable al hacer clic en el avatar
+                userAvatar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('show');
+                });
+                
+                // Cerrar el menú al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!userMenu.contains(e.target)) {
+                        userDropdown.classList.remove('show');
+                    }
+                });
+            } else if (loginButton) {
+                // Si no está logeado, mostrar botón de login
+                loginButton.href = 'login.html';
+                loginButton.textContent = 'Iniciar Sesión';
+                loginButton.style.display = 'inline-block';
+            }
+            
+            // Manejar cierre de sesión
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 

@@ -72,6 +72,92 @@
             opacity: 0.8;
         }
 
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-item {
+            padding: 0.75rem 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            text-align: left;
+            background: none;
+            font-family: inherit;
+        }
+
+        .user-dropdown-item:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: default;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item:first-child:hover {
+            background-color: transparent;
+        }
+
+        .user-dropdown-item:hover {
+            background-color: var(--neutral-light);
+        }
+
+        .user-dropdown-item.logout {
+            color: #ef4444;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item.logout:hover {
+            background-color: #fef2f2;
+        }
+
         .btn-primary {
             background-color: var(--accent-color);
             color: white;
@@ -138,6 +224,140 @@
         .btn-secondary:hover {
             background-color: white;
             color: var(--secondary-color);
+        }
+
+        /* Carousel Section */
+        .carousel-section {
+            padding: 4rem 2rem;
+            background: var(--neutral-light);
+        }
+
+        .carousel-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .carousel-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .carousel-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .carousel-caption h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-button:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-button.prev {
+            left: 20px;
+        }
+
+        .carousel-button.next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicator.active {
+            background: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        .carousel-indicator:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
         }
 
         /* Analyzer Section */
@@ -393,6 +613,36 @@
             .btn-primary, .btn-secondary {
                 width: 100%;
             }
+
+            .carousel-slide img {
+                height: 300px;
+            }
+
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-button.prev {
+                left: 10px;
+            }
+
+            .carousel-button.next {
+                right: 10px;
+            }
+
+            .carousel-caption {
+                padding: 1.5rem;
+            }
+
+            .carousel-caption h3 {
+                font-size: 1.2rem;
+            }
+
+            .carousel-caption p {
+                font-size: 0.9rem;
+            }
         }
 
     </style>
@@ -403,10 +653,18 @@
         <div class="header-container">
             <div class="logo">📊 InvestProperty AI</div>
             <nav>
+                <a href="login.html">Login</a>
                 <a href="#analyzer">Pruébalo</a>
                 <a href="#features">Características</a>
                 <a href="about.html">Acerca de</a>
-                <button class="btn-primary">Comenzar</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div id="userAvatar" class="user-avatar"></div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-item" id="usernameDisplay"></div>
+                        <button class="user-dropdown-item logout" id="logoutButton">Cerrar Sesión</button>
+                    </div>
+                </div>
+                <button class="btn-primary" id="loginButton">Comenzar</button>
             </nav>
         </div>
     </header>
@@ -423,6 +681,58 @@
         </div>
     </section>
 
+    <!-- Carousel Section -->
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-header">
+                <h2>Propiedades Destacadas</h2>
+                <p>Explora algunas de las mejores oportunidades de inversión</p>
+            </div>
+            <div class="carousel">
+                <button class="carousel-button prev" aria-label="Imagen anterior">‹</button>
+                <button class="carousel-button next" aria-label="Siguiente imagen">›</button>
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop" alt="Propiedad moderna con arquitectura contemporánea">
+                        <div class="carousel-caption">
+                            <h3>Villa Moderna en Zona Premium</h3>
+                            <p>Arquitectura contemporánea con acabados de lujo</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop" alt="Casa residencial con jardín">
+                        <div class="carousel-caption">
+                            <h3>Residencia Familiar Espaciosa</h3>
+                            <p>Amplio jardín y diseño funcional para toda la familia</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop" alt="Apartamento moderno con vista">
+                        <div class="carousel-caption">
+                            <h3>Apartamento de Lujo con Vista Panorámica</h3>
+                            <p>Vistas espectaculares y diseño minimalista</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=800&fit=crop" alt="Casa con piscina">
+                        <div class="carousel-caption">
+                            <h3>Mansión con Piscina y Áreas Verdes</h3>
+                            <p>Espacios al aire libre y entretenimiento de primera clase</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=800&fit=crop" alt="Casa estilo tradicional">
+                        <div class="carousel-caption">
+                            <h3>Propiedad Clásica Restaurada</h3>
+                            <p>Encanto tradicional con comodidades modernas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Analyzer Section -->
     <section id="analyzer" class="analyzer">
         <h2>Analiza Tu Inversión</h2>
@@ -430,7 +740,7 @@
         <div class="analyzer-container">
             <!-- Form -->
             <div class="form-section">
-                <form action="results.html" method="GET">
+                <form id="analyzerForm" action="results.html" method="GET">
                     <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Detalles de la Propiedad</h3>
                     
                     <div class="form-group">
@@ -445,7 +755,7 @@
                         </div>
                         <div class="form-group">
                             <label for="interestRate">Tasa de Interés (%)</label>
-                            <input type="number" id="interestRate" name="interestRate" placeholder="6.5" min="0" step="0.1" value="6.5" required>
+                            <input type="number" id="interestRate" name="interestRate" placeholder="No lo se" min="0" step="0.1"  >
                         </div>
                     </div>
 
@@ -456,7 +766,7 @@
                         </div>
                         <div class="form-group">
                             <label for="monthlyRent">Renta Mensual ($)</label>
-                            <input type="number" id="monthlyRent" name="monthlyRent" placeholder="3000" min="0" value="3000" required>
+                            <input type="number" id="monthlyRent" name="monthlyRent" placeholder="No lo se" min="0"  >
                         </div>
                     </div>
 
@@ -478,7 +788,7 @@
 
                     <div class="form-group">
                         <label for="location">Ubicación de la Propiedad</label>
-                        <input type="text" id="location" name="location" placeholder="ej., Ciudad de México, CDMX" required>
+                        <input type="text" id="location" name="location" placeholder="ej., Miraflores, Lima" required>
                     </div>
 
                     <button type="submit" class="analyze-btn">🔍 Analizar Inversión</button>
@@ -531,6 +841,173 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Verificar estado de login al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const username = localStorage.getItem('username');
+            
+            const userMenu = document.getElementById('userMenu');
+            const userAvatar = document.getElementById('userAvatar');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const loginButton = document.getElementById('loginButton');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (isLoggedIn === 'true' && username) {
+                // Si está logeado, mostrar avatar con iniciales
+                if (userMenu && userAvatar && username) {
+                    // Obtener iniciales del usuario
+                    const initials = username.substring(0, 2).toUpperCase();
+                    userAvatar.textContent = initials;
+                    userMenu.style.display = 'block';
+                    
+                    // Mostrar nombre de usuario en el dropdown
+                    if (usernameDisplay) {
+                        usernameDisplay.textContent = username;
+                    }
+                    
+                    // Ocultar botón de comenzar si existe
+                    if (loginButton) {
+                        loginButton.style.display = 'none';
+                    }
+                    
+                    // Toggle del menú desplegable al hacer clic en el avatar
+                    userAvatar.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        userDropdown.classList.toggle('show');
+                    });
+                    
+                    // Cerrar el menú al hacer clic fuera
+                    document.addEventListener('click', function(e) {
+                        if (!userMenu.contains(e.target)) {
+                            userDropdown.classList.remove('show');
+                        }
+                    });
+                }
+            } else {
+                // Si no está logeado, mostrar botón de comenzar que redirige a login
+                if (loginButton) {
+                    loginButton.onclick = function() {
+                        window.location.href = 'login.html';
+                    };
+                    loginButton.style.display = 'inline-block';
+                }
+            }
+            
+            // Manejar cierre de sesión
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    window.location.href = 'index.html';
+                });
+            }
+            
+            // Interceptar el envío del formulario de análisis
+            const analyzerForm = document.getElementById('analyzerForm');
+            if (analyzerForm) {
+                analyzerForm.addEventListener('submit', function(e) {
+                    const isLoggedIn = localStorage.getItem('isLoggedIn');
+                    const username = localStorage.getItem('username');
+                    
+                    // Si el usuario no está logeado, redirigir a login
+                    if (isLoggedIn !== 'true' || !username) {
+                        e.preventDefault(); // Prevenir el envío del formulario
+                        window.location.href = 'login.html';
+                        return false;
+                    }
+                    // Si está logeado, permitir el envío normal del formulario
+                });
+            }
+
+            // Inicializar carrusel
+            const carouselTrack = document.getElementById('carouselTrack');
+            const carouselIndicators = document.getElementById('carouselIndicators');
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const nextButton = document.querySelector('.carousel-button.next');
+            const slides = document.querySelectorAll('.carousel-slide');
+            
+            if (carouselTrack && slides.length > 0) {
+                let currentSlide = 0;
+                const totalSlides = slides.length;
+
+                // Crear indicadores
+                slides.forEach((_, index) => {
+                    const indicator = document.createElement('button');
+                    indicator.classList.add('carousel-indicator');
+                    if (index === 0) indicator.classList.add('active');
+                    indicator.setAttribute('aria-label', `Ir a slide ${index + 1}`);
+                    indicator.addEventListener('click', () => goToSlide(index));
+                    carouselIndicators.appendChild(indicator);
+                });
+
+                // Función para actualizar el carrusel
+                function updateCarousel() {
+                    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    
+                    // Actualizar indicadores
+                    document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+                        if (index === currentSlide) {
+                            indicator.classList.add('active');
+                        } else {
+                            indicator.classList.remove('active');
+                        }
+                    });
+                }
+
+                // Función para ir a un slide específico
+                function goToSlide(index) {
+                    currentSlide = index;
+                    updateCarousel();
+                }
+
+                // Función para siguiente slide
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateCarousel();
+                }
+
+                // Función para slide anterior
+                function prevSlide() {
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    updateCarousel();
+                }
+
+                // Event listeners para botones
+                if (nextButton) {
+                    nextButton.addEventListener('click', nextSlide);
+                }
+                if (prevButton) {
+                    prevButton.addEventListener('click', prevSlide);
+                }
+
+                // Auto-play del carrusel (cambia cada 5 segundos)
+                let autoPlayInterval = setInterval(nextSlide, 5000);
+
+                // Pausar auto-play al hacer hover
+                const carousel = document.querySelector('.carousel');
+                if (carousel) {
+                    carousel.addEventListener('mouseenter', () => {
+                        clearInterval(autoPlayInterval);
+                    });
+                    carousel.addEventListener('mouseleave', () => {
+                        autoPlayInterval = setInterval(nextSlide, 5000);
+                    });
+                }
+
+                // Navegación con teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

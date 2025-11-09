@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados del Análisis - InvestProperty AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -75,6 +76,92 @@
 
         nav a:hover {
             opacity: 0.8;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-item {
+            padding: 0.75rem 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            text-align: left;
+            background: none;
+            font-family: inherit;
+        }
+
+        .user-dropdown-item:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: default;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item:first-child:hover {
+            background-color: transparent;
+        }
+
+        .user-dropdown-item:hover {
+            background-color: var(--neutral-light);
+        }
+
+        .user-dropdown-item.logout {
+            color: #ef4444;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .user-dropdown-item.logout:hover {
+            background-color: #fef2f2;
         }
 
         .btn-primary {
@@ -196,6 +283,28 @@
             line-height: 1.8;
         }
 
+        .chart-container {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .chart-container h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
         .back-button {
             text-align: center;
             margin-top: 3rem;
@@ -247,6 +356,13 @@
                 <a href="index.html#analyzer">Pruébalo</a>
                 <a href="index.html#features">Características</a>
                 <a href="about.html">Acerca de</a>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div id="userAvatar" class="user-avatar"></div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-item" id="usernameDisplay"></div>
+                        <button class="user-dropdown-item logout" id="logoutButton">Cerrar Sesión</button>
+                    </div>
+                </div>
                 <a href="index.html" class="btn-primary">Nuevo Análisis</a>
             </nav>
         </div>
@@ -254,6 +370,14 @@
 
     <!-- Results Section -->
     <section class="results-page">
+
+        <div class="chart-container">
+            <h3>Evolución del Valor de la Propiedad (10 Años)</h3>
+            <div class="chart-wrapper">
+                <canvas id="propertyValueChart"></canvas>
+            </div>
+        </div>
+
         <div class="results-header">
             <h1>Resultados del Análisis</h1>
             <p>Análisis de inversión inmobiliaria basado en simulaciones Monte Carlo</p>
@@ -302,12 +426,192 @@
                     Esta propiedad muestra un fuerte potencial de inversión basado en el análisis Monte Carlo.
                 </div>
             </div>
+
+
         </div>
 
         <div class="back-button">
             <a href="index.html" class="btn-secondary">Realizar Nuevo Análisis</a>
         </div>
     </section>
+
+    <script>
+        // Verificar estado de login al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const username = localStorage.getItem('username');
+            
+            if (isLoggedIn !== 'true' || !username) {
+                // Si no está logeado, redirigir a index
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Si está logeado, mostrar avatar con iniciales
+            const userMenu = document.getElementById('userMenu');
+            const userAvatar = document.getElementById('userAvatar');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (userMenu && userAvatar && username) {
+                // Obtener iniciales del usuario
+                const initials = username.substring(0, 2).toUpperCase();
+                userAvatar.textContent = initials;
+                userMenu.style.display = 'block';
+                
+                // Mostrar nombre de usuario en el dropdown
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = username;
+                }
+                
+                // Toggle del menú desplegable al hacer clic en el avatar
+                userAvatar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('show');
+                });
+                
+                // Cerrar el menú al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!userMenu.contains(e.target)) {
+                        userDropdown.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Manejar cierre de sesión
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Crear gráfico de evolución del valor de la propiedad
+            const ctx = document.getElementById('propertyValueChart');
+            if (ctx) {
+                // Datos inventados para 10 años con crecimiento progresivo
+                // Valores fijos que muestran un crecimiento realista del 3.5% anual con variaciones
+                const propertyValues = [
+                    500000,  // Año 0
+                    517500,  // Año 1
+                    535600,  // Año 2
+                    554350,  // Año 3
+                    573750,  // Año 4
+                    593830,  // Año 5
+                    614610,  // Año 6
+                    636120,  // Año 7
+                    658380,  // Año 8
+                    681420,  // Año 9
+                    705270   // Año 10
+                ];
+                
+                const years = propertyValues.map((_, index) => `Año ${index}`);
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Valor de la Propiedad ($)',
+                            data: propertyValues,
+                            borderColor: 'rgb(99, 102, 241)',
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'rgb(99, 102, 241)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                        weight: '600'
+                                    },
+                                    color: '#1f2937',
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                titleFont: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                bodyFont: {
+                                    size: 13
+                                },
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Valor: $' + context.parsed.y.toLocaleString('es-ES');
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString('es-ES');
+                                    },
+                                    font: {
+                                        size: 12
+                                    },
+                                    color: '#6b7280'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Valor ($)',
+                                    font: {
+                                        size: 14,
+                                        weight: '600'
+                                    },
+                                    color: '#1f2937'
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: {
+                                        size: 12
+                                    },
+                                    color: '#6b7280'
+                                },
+                                grid: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Años',
+                                    font: {
+                                        size: 14,
+                                        weight: '600'
+                                    },
+                                    color: '#1f2937'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 
