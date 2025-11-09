@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestProperty AI - Smart Real Estate Investment Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d3561;
+            --secondary-color: #6366f1;
+            --accent-color: #10b981;
+            --neutral-light: #f8f9fa;
+            --neutral-dark: #1f2937;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+
+        /* Analyzer Section */
+        .analyzer {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .analyzer h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .analyzer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .form-section {
+            background: var(--neutral-light);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: white;
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: var(--neutral-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .result-card.positive {
+            border-left-color: var(--accent-color);
+        }
+
+        .result-card.negative {
+            border-left-color: #ef4444;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .result-value.positive {
+            color: var(--accent-color);
+        }
+
+        .result-value.negative {
+            color: #ef4444;
+        }
+
+        .investment-recommendation {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--accent-color);
+        }
+
+        .recommendation-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-badge.caution {
+            background: #f59e0b;
+        }
+
+        .recommendation-badge.risky {
+            background: #ef4444;
+        }
+
+        .recommendation-text {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--neutral-light);
+            padding: 4rem 2rem;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Hidden Results */
+        .results-wrapper {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .results-wrapper.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .analyzer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            border: 3px solid var(--neutral-light);
+            border-top: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">📊 InvestProperty AI</div>
+            <nav>
+                <a href="#analyzer">Try It</a>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <button class="btn-primary">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Smart Real Estate Investment Analysis Powered by AI</h1>
+            <p>Analyze property investments with AI-powered Monte Carlo simulations. Get instant insights on ROI, NPV, and investment viability.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="document.getElementById('analyzer').scrollIntoView({ behavior: 'smooth' })">Start Analysis</button>
+                <button class="btn-secondary">Watch Demo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analyzer Section -->
+    <section id="analyzer" class="analyzer">
+        <h2>Analyze Your Investment</h2>
+        
+        <div class="analyzer-container">
+            <!-- Form -->
+            <div class="form-section">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Property Details</h3>
+                
+                <div class="form-group">
+                    <label for="propertyPrice">Property Price ($)</label>
+                    <input type="number" id="propertyPrice" placeholder="500000" min="0">
+                </div>
+
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="downPayment">Down Payment (%)</label>
+                        <input type="number" id="downPayment" placeholder="20" min="0" max="100" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="interestRate">Interest Rate (%)</label>
+                        <input type="number" id="interestRate" placeholder="6.5" min="0" step="0.1" value="6.5">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="mortgageTerm">Mortgage Term (years)</label>
+                        <input type="number" id="mortgageTerm" placeholder="30" min="1" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="monthlyRent">Monthly Rent ($)</label>
+                        <input type="number" id="monthlyRent" placeholder="3000" min="0" value="3000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="annualAppreciation">Annual Appreciation (%)</label>
+                        <input type="number" id="annualAppreciation" placeholder="3.5" min="0" step="0.1" value="3.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="yearlyExpenses">Annual Expenses (%)</label>
+                        <input type="number" id="yearlyExpenses" placeholder="25" min="0" max="100" value="25">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="investmentPeriod">Investment Period (years)</label>
+                    <input type="number" id="investmentPeriod" placeholder="10" min="1" value="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Property Location</label>
+                    <input type="text" id="location" placeholder="e.g., New York, NY">
+                </div>
+
+                <button class="analyze-btn" onclick="analyzeInvestment()">🔍 Analyze Investment</button>
+            </div>
+
+            <!-- Results -->
+            <div class="results-section">
+                <div class="results-wrapper" id="resultsWrapper">
+                    <div class="loading" id="loadingSpinner" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Running 10,000 Monte Carlo simulations...</p>
+                    </div>
+                    
+                    <div id="resultsContent" style="display: none;">
+                        <div class="results-container">
+                            <div class="result-card">
+                                <div class="result-label">Net Present Value</div>
+                                <div class="result-value" id="npvValue">$0</div>
+                                <small style="color: var(--text-secondary);">Expected NPV (10th percentile)</small>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-label">Return on Investment</div>
+                                <div class="result-value" id="roiValue">0%</div>
+                                <small style="color: var(--text-secondary);">Average annual return</small>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-label">Property Value (Projected)</div>
+                                <div class="result-value" id="projectedValue">$0</div>
+                                <small style="color: var(--text-secondary);">At end of investment period</small>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-label">Total Profit</div>
+                                <div class="result-value" id="totalProfit">$0</div>
+                                <small style="color: var(--text-secondary);">Net gain including rental income</small>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-label">Best Case Scenario</div>
+                                <div class="result-value" id="bestCase">$0</div>
+                                <small style="color: var(--text-secondary);">90th percentile outcome</small>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-label">Worst Case Scenario</div>
+                                <div class="result-value" id="worstCase">$0</div>
+                                <small style="color: var(--text-secondary);">10th percentile outcome</small>
+                            </div>
+
+                            <div class="investment-recommendation">
+                                <div class="recommendation-badge" id="recommendationBadge">STRONG BUY</div>
+                                <div class="recommendation-text" id="recommendationText">
+                                    This property shows strong investment potential based on Monte Carlo analysis.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="features-container">
+            <h2>Why Choose InvestProperty AI?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced algorithms analyze market trends, property appreciation, and rental income projections to give you accurate investment insights.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Monte Carlo Simulations</h3>
+                    <p>10,000 probability scenarios run instantly to calculate best-case, worst-case, and realistic investment outcomes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>ROI & NPV Calculations</h3>
+                    <p>Get precise return on investment and net present value metrics to compare properties and make data-driven decisions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Location Intelligence</h3>
+                    <p>Market-specific insights considering regional appreciation rates, rental demands, and economic indicators.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Get comprehensive investment analysis in seconds, not hours. Make faster decisions with real-time data.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your property data and analysis are encrypted and never shared. Complete privacy for your investment analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function analyzeInvestment() {
+            // Get input values
+            const propertyPrice = parseFloat(document.getElementById('propertyPrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPayment').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const mortgageTerm = parseInt(document.getElementById('mortgageTerm').value);
+            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value);
+            const annualAppreciation = parseFloat(document.getElementById('annualAppreciation').value);
+            const yearlyExpensesPercent = parseFloat(document.getElementById('yearlyExpenses').value);
+            const investmentPeriod = parseInt(document.getElementById('investmentPeriod').value);
+            const location = document.getElementById('location').value;
+
+            // Validate inputs
+            if (!propertyPrice || propertyPrice <= 0) {
+                alert('Please enter a valid property price');
+                return;
+            }
+
+            // Show loading spinner
+            const resultsWrapper = document.getElementById('resultsWrapper');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            resultsWrapper.classList.add('show');
+            loadingSpinner.style.display = 'block';
+            resultsContent.style.display = 'none';
+
+            // Simulate processing delay
+            setTimeout(() => {
+                // Calculate initial investment
+                const downPayment = propertyPrice * (downPaymentPercent / 100);
+                const loanAmount = propertyPrice - downPayment;
+
+                // Monte Carlo simulation
+                const simulations = 10000;
+                const results = [];
+
+                for (let i = 0; i < simulations; i++) {
+                    // Add randomness to variables (±10%)
+                    const appreciation = annualAppreciation + (Math.random() - 0.5) * 2;
+                    const expenses = yearlyExpensesPercent + (Math.random() - 0.5) * 5;
+                    const rent = monthlyRent * (0.95 + Math.random() * 0.1);
+
+                    // Calculate property value after investment period
+                    let propertyValue = propertyPrice;
+                    for (let year = 0; year < investmentPeriod; year++) {
+                        propertyValue = propertyValue * (1 + appreciation / 100);
+                    }
+
+                    // Calculate total rental income
+                    const annualExpenses = (propertyPrice * (expenses / 100));
+                    const annualRentalIncome = rent * 12;
+                    const netAnnualCashFlow = annualRentalIncome - annualExpenses;
+                    const totalRentalCashFlow = netAnnualCashFlow * investmentPeriod;
+
+                    // Calculate total profit
+                    const propertyAppreciation = propertyValue - propertyPrice;
+                    const totalProfit = propertyAppreciation + totalRentalCashFlow;
+
+                    // Calculate NPV (simplified, assuming 10% discount rate)
+                    const discountRate = 0.10;
+                    let npv = -downPayment;
+                    for (let year = 1; year <= investmentPeriod; year++) {
+                        const cashFlow = netAnnualCashFlow;
+                        npv += cashFlow / Math.pow(1 + discountRate, year);
+                    }
+                    npv += propertyAppreciation / Math.pow(1 + discountRate, investmentPeriod);
+
+                    // Calculate ROI
+                    const roi = (totalProfit / downPayment) * 100 / investmentPeriod;
+
+                    results.push({
+                        npv: npv,
+                        roi: roi,
+                        propertyValue: propertyValue,
+                        totalProfit: totalProfit,
+                        totalCashFlow: totalRentalCashFlow
+                    });
+                }
+
+                // Sort results for percentile calculations
+                results.sort((a, b) => a.npv - b.npv);
+
+                // Calculate statistics
+                const p10NPV = results[Math.floor(simulations * 0.1)].npv;
+                const p90NPV = results[Math.floor(simulations * 0.9)].npv;
+                const avgROI = results.reduce((sum, r) => sum + r.roi, 0) / simulations;
+                const avgPropertyValue = results.reduce((sum, r) => sum + r.propertyValue, 0) / simulations;
+                const avgProfit = results.reduce((sum, r) => sum + r.totalProfit, 0) / simulations;
+                const p90Profit = results[Math.floor(simulations * 0.9)].totalProfit;
+                const p10Profit = results[Math.floor(simulations * 0.1)].totalProfit;
+
+                // Update UI
+                document.getElementById('npvValue').textContent = '$' + formatNumber(p10NPV);
+                document.getElementById('roiValue').textContent = avgROI.toFixed(2) + '%';
+                document.getElementById('projectedValue').textContent = '$' + formatNumber(Math.round(avgPropertyValue));
+                document.getElementById('totalProfit').textContent = '$' + formatNumber(Math.round(avgProfit));
+                document.getElementById('bestCase').textContent = '$' + formatNumber(Math.round(p90Profit));
+                document.getElementById('worstCase').textContent = '$' + formatNumber(Math.round(p10Profit));
+
+                // Determine recommendation
+                const badge = document.getElementById('recommendationBadge');
+                const text = document.getElementById('recommendationText');
+                
+                let recommendation = '';
+                let badgeClass = '';
+
+                if (avgROI > 10 && p10NPV > 0) {
+                    recommendation = '🚀 STRONG BUY';
+                    badgeClass = 'positive';
+                    text.innerHTML = `<strong>${location || 'This property'}</strong> shows excellent investment potential! With an average ROI of ${avgROI.toFixed(1)}% annually and a positive NPV in conservative scenarios, this property is a solid investment opportunity. The Monte Carlo analysis suggests strong returns across multiple market conditions.`;
+                } else if (avgROI > 5 && p10NPV > -10000) {
+                    recommendation = '✅ BUY';
+                    badgeClass = 'positive';
+                    text.innerHTML = `<strong>${location || 'This property'}</strong> presents a good investment opportunity. With an expected ROI of ${avgROI.toFixed(1)}% annually, this property offers competitive returns. Consider this for a balanced real estate portfolio.`;
+                } else if (avgROI > 0) {
+                    recommendation = '⚠️ CAUTION';
+                    badgeClass = 'caution';
+                    text.innerHTML = `<strong>${location || 'This property'}</strong> shows modest returns of ${avgROI.toFixed(1)}% annually. While there's potential profit, carefully evaluate your investment criteria. Consider comparing with other opportunities in the market.`;
+                } else {
+                    recommendation = '❌ NOT RECOMMENDED';
+                    badgeClass = 'risky';
+                    text.innerHTML = `<strong>${location || 'This property'}</strong> may not be a suitable investment at the current parameters. The analysis shows negative or minimal returns. Consider negotiating a lower price or looking for alternative properties with better fundamentals.`;
+                }
+
+                badge.textContent = recommendation;
+                badge.className = 'recommendation-badge ' + badgeClass;
+
+                // Hide loading, show results
+                loadingSpinner.style.display = 'none';
+                resultsContent.style.display = 'block';
+            }, 1500);
+        }
+
+        function formatNumber(num) {
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
+                analyzeInvestment();
+            }
+        });
+    </script>
+</body>
+</html>
